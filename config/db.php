@@ -1,10 +1,11 @@
 <?php
-    $servername = "localhost";
+    $hostname = "localhost";
     $username = "root";
     $password = "";
+    $database = "covid_restaurant";
 
     // Init new MySQL connection.
-    $db = new mysqli($servername, $username, $password);
+    $db = new mysqli($hostname, $username, $password, $database);
 
     // Assert connection status.
     if ($db->connect_error) 

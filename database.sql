@@ -34,13 +34,13 @@ CREATE TABLE `dish` (
     PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `ingredient_dish` (
-    `ingredient_id` INT NOT NULL,
+CREATE TABLE `dish_ingredient` (
     `dish_id` INT NOT NULL,
+    `ingredient_id` INT NOT NULL,
     `quantity` INT NOT NULL,
-    PRIMARY KEY (`ingredient_id`, `dish_id`),
-    FOREIGN KEY (`ingredient_id`) REFERENCES `ingredient`(`id`),
-	FOREIGN KEY (`dish_id`) REFERENCES `dish` (`id`)
+    PRIMARY KEY (`dish_id`, `ingredient_id`),
+	FOREIGN KEY (`dish_id`) REFERENCES `dish` (`id`),
+    FOREIGN KEY (`ingredient_id`) REFERENCES `ingredient`(`id`)
 );
 
 CREATE TABLE `table` (
