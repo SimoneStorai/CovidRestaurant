@@ -1,4 +1,4 @@
-ingredientCREATE DATABASE `covid_restaurant`;
+CREATE DATABASE `covid_restaurant`;
 USE `covid_restaurant`;
 
 CREATE TABLE `user` (
@@ -42,12 +42,6 @@ CREATE TABLE `dish_ingredient` (
     PRIMARY KEY (`dish_id`, `ingredient_id`),
 	FOREIGN KEY (`dish_id`) REFERENCES `dish` (`id`),
     FOREIGN KEY (`ingredient_id`) REFERENCES `ingredient`(`id`)
-);
-
-CREATE TABLE `table` (
-	`id` INT NOT NULL AUTO_INCREMENT,
-    `seats` INT NOT NULL,
-    PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `customer` (
