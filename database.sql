@@ -37,6 +37,7 @@ CREATE TABLE `dish` (
 CREATE TABLE `ingredient_dish` (
     `ingredient_id` INT NOT NULL,
     `dish_id` INT NOT NULL,
+    `quantity` INT NOT NULL,
     PRIMARY KEY (`ingredient_id`, `dish_id`),
     FOREIGN KEY (`ingredient_id`) REFERENCES `ingredient`(`id`),
 	FOREIGN KEY (`dish_id`) REFERENCES `dish` (`id`)
