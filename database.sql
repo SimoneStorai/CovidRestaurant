@@ -29,6 +29,7 @@ CREATE TABLE `ingredient` (
 CREATE TABLE `dish` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(32) NOT NULL,
+    `price` DECIMAL(6, 2) NOT NULL,
     `waiting_time` TIME NOT NULL,
     `image` VARCHAR(128),
     PRIMARY KEY (`id`)
