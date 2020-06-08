@@ -4,18 +4,18 @@
 
     // Prepare dish insert statement.
     // Return last inserted ID.
-    $dish_stmt = $db->prepare("INSERT INTO `dish` (`name`, `waiting_time`, `image`) VALUES (?, ?, ?)");
+    $dish_stmt = $db->prepare("INSERT INTO `dish` (`name`, `price`, `waiting_time`, `image`) VALUES (?, ?, ?)");
     $dish_stmt->bind_param("sis", $name, $waiting_time, $image);
 
     // Decode authorization credentials.
-    if (!assert_string($_POST["mail"], false))
+    if (!assert_string_array($_POST, "mail", false))
     {
         echo("Invalid mail.");
         return;
     }
     $mail = $_POST["mail"];
 
-    if (!assert_string($_POST["password"], false))
+    if (!assert_string_array($_POST, "password", false))
     {
         echo("Invalid password");
         return;
@@ -27,6 +27,8 @@
 
     $name = $dish["name"];
     if (!is_string($name) || strlen($name) == 0) return;
+
+    $price = $dish["price"];
 
     $waiting_time = $dish["waiting_time"];
     if (!is_int($waiting_time) || $waiting_time < 0) return;
