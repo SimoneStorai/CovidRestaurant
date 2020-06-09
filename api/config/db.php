@@ -9,6 +9,5 @@
 
     // Assert connection status.
     if ($db->connect_error) 
-        die("Connection has failed: " . $db->connect_error . ".");
-    echo "Connected successfully.";
+        die("Connection to database has failed: " . $db->connect_error . ".");
 ?>

@@ -1,24 +1,26 @@
 <?php
     include("../util/integer.php");
     include("../util/string.php");
-    include("../config/db.php");
+    include("config/db.php");
 
-    // Decode authorization credentials.
-    if (!assert_string_array($_POST["mail"], false))
-    {
-        echo("Invalid mail.");
-        return;
-    }
-    $mail = $_POST["mail"];
+    // Prepare dishes select statement.
+    $dishes_stmt = $db->prepare(
+        "SELECT d.id AS id, d.name AS name, d.price AS price, d.waiting_time AS waiting_time, d.image_url AS image_url, 
+        MIN(FLOOR(i.quantity / di.quantity)) AS units FROM dish_ingredient di
+        JOIN dish d ON di.dish_id = d.id
+        JOIN ingredient i ON di.ingredient_id = i.id 
+        HAVING units > 0;"
+    );
 
-    if (!assert_string_array($_POST["password"], false))
-    {
-        echo("Invalid password");
-        return;
-    }
-    $password = $_POST["password"];
+    // Execute query and parse its result.
+    // Append to serialization array.
+    $dishes = array();
+    $dishes_stmt->execute();
+    $result = $dishes_stmt->get_result();
+    while ($row = $result->fetch_assoc())
+       array_push($dishes, $row);
 
-    // Parse result.
-    $result = $dishes_stmt->query();
-    echo($result);
+    // Echo as JSON array.
+    header("Content-Type: application/json");
+    echo(json_encode($dishes));
 ?>

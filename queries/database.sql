@@ -31,7 +31,8 @@ CREATE TABLE `dish` (
     `name` VARCHAR(32) NOT NULL,
     `price` DECIMAL(6, 2) NOT NULL,
     `waiting_time` TIME NOT NULL,
-    `image` VARCHAR(128),
+    `image_url` VARCHAR(128),
+    `description` VARCHAR(256),
     PRIMARY KEY (`id`)
 );
 
@@ -39,6 +40,7 @@ CREATE TABLE `dish_ingredient` (
     `dish_id` INT NOT NULL,
     `ingredient_id` INT NOT NULL,
     `quantity` INT NOT NULL,
+    `referral_url` VARCHAR(128),
     PRIMARY KEY (`dish_id`, `ingredient_id`),
 	FOREIGN KEY (`dish_id`) REFERENCES `dish` (`id`),
     FOREIGN KEY (`ingredient_id`) REFERENCES `ingredient`(`id`)
