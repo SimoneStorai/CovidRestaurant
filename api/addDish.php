@@ -37,11 +37,12 @@
     if (!is_string($image) || strlen($image) == 0) $image = "";
 
     // Execute dish insert statement, select its entry's ID.
+       // Return last inserted ID.
     $dish_stmt->execute();
     $dish_id = $db->insert_id;
 
     // Prepare dish_ingredient insert statement.
-    // Return last inserted ID.
+
     $dish_ingredient_stmt = $db->prepare("INSERT INTO `dish_ingredient` (`ingredient_id`, `quantity`) VALUES (?, ?, ?);");
     $dish_ingredient_stmt->bind_param($dish_id, $id, $quantity);
     

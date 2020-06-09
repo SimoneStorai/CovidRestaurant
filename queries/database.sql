@@ -55,10 +55,16 @@ CREATE TABLE `customer` (
 
 CREATE TABLE `order` (
 	`id` INT NOT NULL AUTO_INCREMENT,
-	`customer_id` INT NOT NULL,
+	`table_id` INT NOT NULL,
+    `timestamp` DATETIME NOT NULL,
+    PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `order_dish` (
+	`order_id` INT NOT NULL,
     `dish_id` INT NOT NULL,
     `quantity` INT NOT NULL,
-    PRIMARY KEY (`id`),
-    FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`),
+    PRIMARY KEY (`order_id`, `dish_id`),
+    FOREIGN KEY (`order_id`) REFERENCES `order` (`id`),
     FOREIGN KEY (`dish_id`) REFERENCES `dish` (`id`)
-)
+);
