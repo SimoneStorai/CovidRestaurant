@@ -48,8 +48,7 @@ CREATE TABLE `customer` (
 	`id` INT NOT NULL AUTO_INCREMENT,
     `table_id` INT NOT NULL,
     `date` DATE NOT NULL,
-    PRIMARY KEY (`id`),
-    FOREIGN KEY (`table_id`) REFERENCES `table` (`id`)
+    PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `order` (

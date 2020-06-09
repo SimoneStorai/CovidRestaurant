@@ -18,9 +18,6 @@
     }
     $password = $_POST["password"];
 
-    // Prepare dishes select statement.
-    $dishes_stmt = $db->prepare("SELECT * FROM `dish`");
-
     // Parse result.
     $result = $dishes_stmt->query();
     echo($result);
