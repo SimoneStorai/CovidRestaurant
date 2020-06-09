@@ -42,7 +42,6 @@
     $dish_id = $db->insert_id;
 
     // Prepare dish_ingredient insert statement.
-
     $dish_ingredient_stmt = $db->prepare("INSERT INTO `dish_ingredient` (`ingredient_id`, `quantity`) VALUES (?, ?, ?);");
     $dish_ingredient_stmt->bind_param($dish_id, $id, $quantity);
     
