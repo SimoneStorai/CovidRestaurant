@@ -1,6 +1,6 @@
 <?php
+    include("../api/config/db.php");
     include("../util/string.php");
-    include("../config/db.php");
 
     // Prepare dish insert statement.
     // Return last inserted ID.
@@ -37,7 +37,7 @@
     if (!is_string($image) || strlen($image) == 0) $image = "";
 
     // Execute dish insert statement, select its entry's ID.
-       // Return last inserted ID.
+    // Return last inserted ID.
     $dish_stmt->execute();
     $dish_id = $db->insert_id;
 

@@ -1,7 +1,7 @@
 <?php
+    include("../api/config/db.php");
     include("../util/integer.php");
     include("../util/string.php");
-    include("../config/db.php");
 
     // Prepare order insert statement.
     $order_stmt = $db->prepare("INSERT INTO `order` (`table_id`, `timestamp`) VALUES (?, ?)");
@@ -71,11 +71,9 @@
                     // Execute ingredient consumption statement.
                     $ingredient_consumption_stmt->execute();
                 }
-                else
-                {
-                    echo("Not enough ingredients.");
-                }
+                else echo("Not enough ingredients.");
             }
+            else echo()
         }
     }
 ?>

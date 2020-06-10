@@ -1,9 +1,7 @@
 <?php
     function assert_int($var)
     {
-        return  isset($var)
-                &&
-                is_int($var);
+        return  is_int(intval($var));
     }
     function assert_int_array($array, $index)
     {
