@@ -26,7 +26,6 @@ $(document).ready(function() {
                     editableColumns: "0, 1, 2, 3, 4",
                     onEdit: function($row)
                     {
-                        alert($row.children("#price").text());
                         $.post("../../api/updateDish.php", 
                             { 
                                 id: $row.children("#id").text(),
