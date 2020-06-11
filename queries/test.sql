@@ -1,5 +1,5 @@
-INSERT INTO dish (name, price, waiting_time, image)
-VALUES ("Putenga", 30.0, 1000, "");
+INSERT INTO dish (name, price, waiting_time, category, description, image_url)
+VALUES ("Putenga", 30.0, 1000, "SPECIALS", "Fuck", "");
 
 INSERT INTO ingredient (name, quantity)
 VALUES ("Sale", 3000);

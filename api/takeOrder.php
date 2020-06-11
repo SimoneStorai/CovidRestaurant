@@ -32,11 +32,24 @@
     $order_stmt->execute();
     $order_id = $db->insert_id;
 
+    // Prepare get dish availability select statement.
+    $availability_stmt = $db->prepare(
+        "SELECT COALESCE(MIN(FLOOR(i.quantity / di.quantity)), 0) AS units FROM dish_ingredient di
+        JOIN ingredient i ON di.ingredient_id = i.id
+        WHERE di.dish_id = ?;");
+    $availability_stmt->bind_param("i", $dish_id);
+
     // Prepare order-dish insert statement.
     $order_dish_stmt = $db->prepare("INSERT INTO `order_dish` (`order_id`, `dish_id`, `quantity`) VALUES (?, ?, ?)");
     $order_dish_stmt->bind_param("iii", $order_id, $dish_id, $quantity);
 
-    echo(count($orders));
+    // Prepare ingredient consumption update statement.
+    $ingredient_consumption_stmt = $db->prepare("
+        UPDATE ingredient i JOIN dish_ingredient di ON di.ingredient_id = i.id
+        SET i.quantity = (i.quantity - di.quantity) 
+        WHERE di.dish_id = ?;");
+    $ingredient_consumption_stmt->bind_param("i", $dish_id);
+
     foreach ($orders as $order)
     {
         // Parse dish ID.
@@ -47,6 +60,17 @@
         }
         $dish_id = intval($order["id"]);
 
+        // Execute availability statement.
+        $availability_stmt->execute();
+        $result = $availability_stmt->get_result();
+        if ((!$row = $result->fetch_assoc()) 
+            || 
+            ($row["units"] <= 0))
+        {
+            echo($dish_id . " is unavailable.");
+            continue;
+        }
+
         // Parse quantity.
         if (!assert_int_array($order, "quantity"))
         {
@@ -55,40 +79,8 @@
         }
         $quantity = intval($order["quantity"]);
         
-        // Execute order dish statement.
+        // Execute order dish and ingredient consumption statement.
         $order_dish_stmt->execute();
+        $ingredient_consumption_stmt->execute();
     }
-
-    /*
-    // Execute dish insert statement, select its entry's ID.
-    // Return last inserted ID.
-    $dish_stmt->execute();
-    $dish_id = $db->insert_id;
-
-    // Prepare dish_ingredient insert statement.
-    $dish_ingredient_stmt = $db->prepare("INSERT INTO `dish_ingredient` (`ingredient_id`, `quantity`) VALUES (?, ?, ?);");
-    $dish_ingredient_stmt->bind_param($dish_id, $id, $quantity);
-    
-    // Register ingredients.
-    $ingredients = $dish["ingredients"];
-    if (is_array($ingredients))
-    {
-        foreach ($ingredients as $ingredient)
-        {
-            if (is_array($ingredient))
-            {
-                // Parse and assert ingredient ID.
-                $id = $ingredient["id"];
-                if (!is_int($id) || $id < 0) continue;
-
-                // Parse and assert ingredient quantity.
-                $quantity = $ingredient["quantity"];
-                if (!is_int($quantity) || $quantity < 0) continue;
-
-                // Execute statement.
-                $dish_ingredient_stmt->execute();
-            }
-        }
-    }
-    */
 ?>
