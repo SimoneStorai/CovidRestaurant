@@ -189,8 +189,29 @@ function getMenu(cat) {
 
   function takeOrder() 
   {
-    alert(JSON.stringify(
-      localStorage.orders));
+    var _orders = [];
+    var orders = JSON.parse(localStorage.orders);
+    for (var i = 0; i < orders.length; i++)
+    {
+      // Get order.
+      var order = orders[i];
+
+      // Append order to serialization orders array.
+      _orders[i] = {
+        id: order[0],
+        quantity: order[3]
+      }
+    }
+
+
+    $.post("../api/takeOrder.php", 
+      { 
+        table_id: 0, 
+        orders: _orders
+      })
+      .done(function(data) {
+        alert(data);
+      });
   }
 
   
