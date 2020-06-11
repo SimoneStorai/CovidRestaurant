@@ -87,7 +87,7 @@
         description = ?,
         image_url = ?
         WHERE id = ?");
-    echo($dish_stmt->bind_param(
+    $dish_stmt->bind_param(
         "sdssssi", 
         $name, 
         $price, 
@@ -95,8 +95,8 @@
         $category,
         $description, 
         $image_url, 
-        $id));
+        $id);
 
     // Execute dish update statement.
-    echo($dish_stmt->execute());
+    $dish_stmt->execute();
 ?>

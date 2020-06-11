@@ -22,18 +22,15 @@ $(document).ready(function() {
                     $addButton: $('#new-ingredient-button'),
                     onAdd: function($row)
                     {
-                        $.post("../../api/addIngredient.php",
+                        $.post("../../../api/addIngredient.php",
                             {
                                 name: "Nome",
                                 quantity: 0.00,
-                            })
-                            .done(function(data) {
-                                $row.children("#id").text($data["id"]);
                             });
                     },
                     onEdit: function($row)
                     {
-                        $.post("../../api/updateIngredient.php", 
+                        $.post("../../../api/updateIngredient.php", 
                             { 
                                 id: $row.children("#id").text(),
                                 name: $row.children("#name").text(),
@@ -42,7 +39,7 @@ $(document).ready(function() {
                     },
                     onBeforeDelete: function($row) 
                     {
-                        $.post("../../api/removeIngredient.php", 
+                        $.post("../../../api/removeIngredient.php", 
                             { 
                                 ingredient_id: $row.children("#id").text() 
                             })
