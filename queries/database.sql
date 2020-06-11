@@ -31,8 +31,9 @@ CREATE TABLE `dish` (
     `name` VARCHAR(32) NOT NULL,
     `price` DECIMAL(6, 2) NOT NULL,
     `waiting_time` TIME NOT NULL,
+    `category` VARCHAR(32) NOT NULL,
     `description` VARCHAR(256),
-    `image_url` VARCHAR(128)
+    `image_url` VARCHAR(128),
     PRIMARY KEY (`id`)
 );
 

@@ -14,6 +14,7 @@ $(document).ready(function() {
                             <td id="name">${dish["name"]}</td>
                             <td id="price">${dish["price"]}</td>
                             <td id="waiting_time">${dish["waiting_time"]}</td>
+                            <td id="category">${dish["waiting_time"]}</td>
                             <td id="description">${dish["description"]}</td>
                             <td id="image_url">${dish["image_url"]}</td>
                             <td id="units">${dish["units"]}</td>
@@ -24,20 +25,33 @@ $(document).ready(function() {
                 // Load the table.
                 var example1 = new BSTable("table", {
                     editableColumns: "0, 1, 2, 3, 4",
+                    $addButton: $('#new-dish-button'),
+                    onAdd: function($row)
+                    {
+                        $.post("../../api/addDish.php",
+                            {
+                                name: "Nome",
+                                price: 0.00,
+                                waiting_time: "00:00:00",
+                                waiting_time: "Nessuna",
+                                description: "Descrizione",
+                                image_url: "Immagine"
+                            })
+                            .done(function(data) {
+                                $row.children("#id").text($data["id"]);
+                            });
+                    },
                     onEdit: function($row)
                     {
-                        alert($row.children("#price").text());
                         $.post("../../api/updateDish.php", 
                             { 
                                 id: $row.children("#id").text(),
                                 name: $row.children("#name").text(),
                                 price: $row.children("#price").text(),
                                 waiting_time: $row.children("#waiting_time").text(),
+                                category: $row.children("#category").text(),
                                 description: $row.children("#description").text(),
                                 image_url: $row.children("#image_url").text()
-                            })
-                            .done(function(data) {
-                                alert(JSON.stringify(data));
                             });
                     },
                     onBeforeDelete: function($row) 

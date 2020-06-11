@@ -53,6 +53,14 @@
     }
     $waiting_time = $_POST["waiting_time"];
 
+    // Parse new waiting time.
+    if (!assert_string_array($_POST, "category", false))
+    {
+        echo("Invalid category provided.");
+        return;
+    }
+    $category = $_POST["category"];
+
     // Parse new description.
     if (!assert_string_array($_POST, "description", false))
     {
@@ -75,14 +83,16 @@
         name = ?,
         price = ?,
         waiting_time = ?,
+        category = ?,
         description = ?,
         image_url = ?
         WHERE id = ?");
     echo($dish_stmt->bind_param(
-        "sdsssi", 
+        "sdssssi", 
         $name, 
         $price, 
-        $waiting_time, 
+        $waiting_time,
+        $category,
         $description, 
         $image_url, 
         $id));

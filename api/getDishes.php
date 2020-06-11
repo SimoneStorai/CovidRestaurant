@@ -4,25 +4,53 @@
     include("config/db.php");
 
     // Prepare dishes select statement.
-    if (isset($_GET["ignoreEmpty"]) && ($_GET["ignoreEmpty"]))
+    if (assert_string_array($_GET, "category", false))
     {
-        $dishes_stmt = $db->prepare(
-            "SELECT d.id AS id, d.name AS name, d.price AS price, d.waiting_time AS waiting_time, d.image_url AS image_url, d.description as description,
-            MIN(FLOOR(i.quantity / di.quantity)) AS units FROM dish_ingredient di
-            JOIN dish d ON di.dish_id = d.id
-            JOIN ingredient i ON di.ingredient_id = i.id
-            GROUP BY d.id;"
-        );
+        $category = $_GET["category"];
+
+        if (isset($_GET["ignoreEmpty"]) && ($_GET["ignoreEmpty"]))
+        {
+            $dishes_stmt = $db->prepare(
+                "SELECT d.id AS id, d.name AS name, d.price AS price, d.waiting_time AS waiting_time, d.category AS category, d.image_url AS image_url, d.description as description,
+                MIN(FLOOR(i.quantity / di.quantity)) AS units FROM dish_ingredient di
+                JOIN dish d ON di.dish_id = d.id
+                JOIN ingredient i ON di.ingredient_id = i.id
+                GROUP BY d.id;"
+            );
+        }
+        else
+        {
+            $dishes_stmt = $db->prepare(
+                "SELECT d.id AS id, d.name AS name, d.price AS price, d.waiting_time AS waiting_time, d.category AS category, d.image_url AS image_url, d.description as description,
+                COALESCE(MIN(FLOOR(i.quantity / di.quantity)), 0) AS units FROM dish d
+                LEFT JOIN dish_ingredient di ON di.dish_id = d.id
+                LEFT JOIN ingredient i ON di.ingredient_id = i.id
+                GROUP BY d.id;"
+            );
+        }
     }
     else
     {
-        $dishes_stmt = $db->prepare(
-            "SELECT d.id AS id, d.name AS name, d.price AS price, d.waiting_time AS waiting_time, d.image_url AS image_url, d.description as description,
-            COALESCE(MIN(FLOOR(i.quantity / di.quantity)), 0) AS units FROM dish d
-            LEFT JOIN dish_ingredient di ON di.dish_id = d.id
-            LEFT JOIN ingredient i ON di.ingredient_id = i.id
-            GROUP BY d.id;"
-        );
+        if (isset($_GET["ignoreEmpty"]) && ($_GET["ignoreEmpty"]))
+        {
+            $dishes_stmt = $db->prepare(
+                "SELECT d.id AS id, d.name AS name, d.price AS price, d.waiting_time AS waiting_time, d.category AS category, d.image_url AS image_url, d.description as description,
+                MIN(FLOOR(i.quantity / di.quantity)) AS units FROM dish_ingredient di
+                JOIN dish d ON di.dish_id = d.id
+                JOIN ingredient i ON di.ingredient_id = i.id
+                GROUP BY d.id;"
+            );
+        }
+        else
+        {
+            $dishes_stmt = $db->prepare(
+                "SELECT d.id AS id, d.name AS name, d.price AS price, d.waiting_time AS waiting_time, d.category AS category, d.image_url AS image_url, d.description as description,
+                COALESCE(MIN(FLOOR(i.quantity / di.quantity)), 0) AS units FROM dish d
+                LEFT JOIN dish_ingredient di ON di.dish_id = d.id
+                LEFT JOIN ingredient i ON di.ingredient_id = i.id
+                GROUP BY d.id;"
+            );
+        }
     }
 
     // Execute query and parse its result.
