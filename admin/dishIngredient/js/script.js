@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $.get("../../api/getIngredients.php", function data() { })
+    $.get("../../api/getDishIngredients.php", function data() { })
             .done(function(ingredients) {
                 for (i = 0; i < ingredients.length; i++)
                 {
@@ -22,7 +22,7 @@ $(document).ready(function() {
                     $addButton: $('#new-ingredient-button'),
                     onAdd: function($row)
                     {
-                        $.post("../../../api/addIngredient.php",
+                        $.post("../../../api/addDishIngredient.php",
                             {
                                 name: "Nome",
                                 quantity: 0.00,
@@ -30,7 +30,7 @@ $(document).ready(function() {
                     },
                     onEdit: function($row)
                     {
-                        $.post("../../../api/updateIngredient.php", 
+                        $.post("../../../api/updateDishIngredient.php", 
                             { 
                                 id: $row.children("#id").text(),
                                 name: $row.children("#name").text(),
@@ -39,7 +39,7 @@ $(document).ready(function() {
                     },
                     onBeforeDelete: function($row) 
                     {
-                        $.post("../../../api/removeIngredient.php", 
+                        $.post("../../../api/removeDishIngredient.php", 
                             { 
                                 ingredient_id: $row.children("#id").text() 
                             });
