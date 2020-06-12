@@ -1,7 +1,6 @@
 $(document).ready(function() {
     $.get("../../api/getDishes.php", function data() { })
             .done(function(dishes) {
-                alert("fuck");
                 for (i = 0; i < dishes.length; i++)
                 {
                     // Populate a new box with dish info.
@@ -18,6 +17,7 @@ $(document).ready(function() {
                             <td id="description">${dish["description"]}</td>
                             <td id="image_url">${dish["image_url"]}</td>
                             <td id="units">${dish["units"]}</td>
+                            <td id="ingredients"><a href="../dishIngredient?id=${dish["id"]}">Ingredienti</a></td>
                         </tr>
 			  	    </tbody>`);
                 }

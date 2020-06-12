@@ -11,25 +11,22 @@ function findGetParameter(parameterName) {
 
 $(document).ready(function() {
     $.get(`../../api/getOrder.php?id=${findGetParameter("id")}`, function data() { })
-            .done(function(orders) {
-                for (i = 0; i < orders.length; i++)
-                {
-                    // Populate a new box with order info.
-                    // Append it to the slider.
-                    var order = orders[i];
-                    $('#table').append(`
-                    <tbody>
-                        <tr>
-                            <th scope="row" id="id">${order["id"]}</th>
-                            <td id="name">${order["name"]}</td>
-                            <td id="price">${order["price"]}</td>
-                            <td id="waiting_time">${order["waiting_time"]}</td>
-                            <td id="description">${order["description"]}</td>
-                            <td id="category">${order["category"]}</td>
-                            <td id="quantity">${order["quantity"]}</td>
-                        </tr>
-			  	    </tbody>`);
-                }
+            .done(function(order) {
+                alert(JSON.stringify(order));
+                // Populate a new box with order info.
+                // Append it to the slider.
+                $('#table').append(`
+                <tbody>
+                    <tr>
+                        <th scope="row" id="id">${order["id"]}</th>
+                        <td id="name">${order["name"]}</td>
+                        <td id="price">${order["price"]}</td>
+                        <td id="waiting_time">${order["waiting_time"]}</td>
+                        <td id="description">${order["description"]}</td>
+                        <td id="category">${order["category"]}</td>
+                        <td id="quantity">${order["quantity"]}</td>
+                    </tr>
+                </tbody>`);
 
                 // Load the table.
                 var example1 = new BSTable("table", {

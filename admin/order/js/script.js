@@ -13,7 +13,7 @@ $(document).ready(function() {
                             <td id="table_id">${order["table_id"]}</td>
                             <td id="timestamp">${order["timestamp"]}</td>
                             <td id="price">${order["price"]}</td>
-                            <td id="ref"><a href="../orderDish?order_id=${order["id"]}">Pietanze</a></td>
+                            <td id="ref"><a href="../orderDish?id=${order["id"]}">Pietanze</a></td>
                         </tr>
 			  	    </tbody>`);
                 }

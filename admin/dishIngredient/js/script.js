@@ -1,48 +1,64 @@
+var _dish_id = 0;
+
+function findGetParameter(parameterName) 
+{
+    var result = null,
+        tmp = [];
+    var items = location.search.substr(1).split("&");
+    for (var index = 0; index < items.length; index++) {
+        tmp = items[index].split("=");
+        if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+    }
+    return result;
+}
+
 $(document).ready(function() {
-    $.get("../../api/getDishIngredients.php", function data() { })
-            .done(function(ingredients) {
-                for (i = 0; i < ingredients.length; i++)
-                {
-                    // Populate a new box with ingredient info.
-                    // Append it to the slider.
-                    var ingredient = ingredients[i];
-                    $('#table').append(`
-                    <tbody>
-                        <tr>
-                            <th scope="row" id="id">${ingredient["id"]}</th>
-                            <td id="name">${ingredient["name"]}</td>
-                            <td id="quantity">${ingredient["quantity"]}</td>
-                        </tr>
-			  	    </tbody>`);
-                }
+    // Parse dish ID.
+    _dish_id = findGetParameter("id");
+
+    $.get(`../../api/getDishIngredients.php?id=${_dish_id}`, function data(){})
+            .done(function(ingredient) {
+                // Populate a new box with ingredient info.
+                // Append it to the slider.
+                $('#table').append(`
+                <tbody>
+                    <tr>
+                        <th scope="row" id="ingredient_id">${ingredient["id"]}</th>
+                        <td id="name">${ingredient["name"]}</td>
+                        <td id="stock_quantity">${ingredient["stock_quantity"]}</td>
+                        <td id="required_quantity">${ingredient["required_quantity"]}</td>
+                    </tr>
+                </tbody>`);
 
                 // Load the table.
                 var example1 = new BSTable("table", {
-                    editableColumns: "0, 1, 2, 3, 4",
+                    editableColumns: "2",
                     $addButton: $('#new-ingredient-button'),
                     onAdd: function($row)
                     {
                         $.post("../../../api/addDishIngredient.php",
                             {
-                                name: "Nome",
-                                quantity: 0.00,
+                                dish_id: _dish_id,
+                                ingredient_id: $row.children("#ingredient_id").text(),
+                                quantity: $row.children("#quantity").text()
                             });
                     },
                     onEdit: function($row)
                     {
                         $.post("../../../api/updateDishIngredient.php", 
                             { 
-                                id: $row.children("#id").text(),
-                                name: $row.children("#name").text(),
-                                quantity: $row.children("#quantity").text(),
+                                dish_id: _dish_id,
+                                ingredient_id: $row.children("#ingredient_id").text(),
+                                quantity: $row.children("#required_quantity").text()
                             });
                     },
                     onBeforeDelete: function($row) 
                     {
                         $.post("../../../api/removeDishIngredient.php", 
                             { 
-                                ingredient_id: $row.children("#id").text() 
-                            });
+                                dish_id: _dish_id,
+                                ingredient_id: $row.children("#ingredient_id").text()
+                            }).done(function(data) { alert(JSON.stringify(data)); });
                     }
                 });
                 example1.init();
