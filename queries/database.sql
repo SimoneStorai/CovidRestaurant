@@ -22,6 +22,7 @@ CREATE TABLE `user_log` (
 CREATE TABLE `ingredient` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(32) NOT NULL,
+    `referral_url` VARCHAR(128),
     `quantity` INT NOT NULL,
     PRIMARY KEY (`id`)
 );
@@ -41,7 +42,6 @@ CREATE TABLE `dish_ingredient` (
     `dish_id` INT NOT NULL,
     `ingredient_id` INT NOT NULL,
     `quantity` INT NOT NULL,
-    `referral_url` VARCHAR(128),
     PRIMARY KEY (`dish_id`, `ingredient_id`),
 	FOREIGN KEY (`dish_id`) REFERENCES `dish` (`id`) ON DELETE CASCADE,
     FOREIGN KEY (`ingredient_id`) REFERENCES `ingredient`(`id`) ON DELETE CASCADE

@@ -9,6 +9,8 @@
 
         <title>CovidRestaurant | Ingredients</title>
         <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+        <link href="css/modal.css" rel="stylesheet" type="text/css">
+        <link href="css/dropdown.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="../../vendor/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
         <script src="../../vendor/jquery/jQuery-3.5.1.min.js"></script>
@@ -32,11 +34,25 @@
                         </tr>
                     </thead>
                 </table>
-                <button id="new-dish-button" class="btn btn-dark">
+                <button id="new-dish-ingredient-button" class="btn btn-dark">
                     Aggiungi
                 </button>			
             </div>
         </main>
+
+        <div id="add-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="dropdown">
+                    <label for="dropdown-content">Ingrediente:</label><br>
+                    <button class="dropdown-button" id="ingredient-dropdown-button">Nessuno</button><br>
+                    <div class="dropdown-content" id="ingredient-dropdown-content"></div>
+                    <label for="ingredient-quantity">Quantità:</label><br>
+                    <input type="number" min="1" id="ingredient-quantity"></input><br>
+                    <button id="confirm-button">Aggiungi</button>
+                </div>
+            </div>
+        </div>
 
         <script src="../../vendor/bstable/js/bstable.js"></script>
         <script src="js/script.js"></script>

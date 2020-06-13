@@ -18,13 +18,13 @@
     $dish_stmt->bind_param("i", $id);
 
     // Execute query and parse its result.
+    $ingredients = array();
     $dish_stmt->execute();
     $result = $dish_stmt->get_result();
-    if ($row = $result->fetch_assoc())
-    {
-        // Echo as JSON array.
-        header("Content-Type: application/json");
-        echo(json_encode($row));
-    }
-    else echo("Order not found.");
+    while ($row = $result->fetch_assoc())
+        array_push($ingredients, $row);
+
+    // Echo ingredients as JSON aray.
+    header("Content-Type: application/json");
+    echo(json_encode($ingredients));
 ?>
