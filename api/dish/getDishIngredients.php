@@ -1,7 +1,7 @@
 <?php
     include("../util/integer.php");
     include("../util/string.php");
-    include("config/db.php");
+    include("../config/db.php");
 
     // Parse dish ID.
     if (!assert_int_array($_GET, "id"))

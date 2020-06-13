@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $.get("../../api/getOrders.php", function data() { })
+    $.get("../../api/order/getOrders.php", function data() { })
             .done(function(orders) {
                 for (i = 0; i < orders.length; i++)
                 {

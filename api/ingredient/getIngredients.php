@@ -1,7 +1,7 @@
 <?php
     include("../util/integer.php");
     include("../util/string.php");
-    include("config/db.php");
+    include("../config/db.php");
 
     // Prepare ingredients select statement.
     $ingredients_stmt = $db->prepare("SELECT * FROM `ingredient`");

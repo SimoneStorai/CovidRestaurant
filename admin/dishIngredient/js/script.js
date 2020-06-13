@@ -21,7 +21,7 @@ openButton.onclick = function()
 
     if (!has_loaded)
     {
-        $.get("../../api/getIngredients.php", function data() { })
+        $.get("../../api/ingredient/getIngredients.php", function data() { })
             .done(function(ingredients) {
                 var html = "";
                 for (var i = 0; i < ingredients.length; i++)
@@ -48,7 +48,7 @@ confirmButton.onclick = function()
     {
         alert(document.getElementById("ingredient-quantity").innerText);
         // Add new dish ingredient.
-        $.post("../../../api/addDishIngredient.php",
+        $.post("../../../api/dish/addDishIngredient.php",
             {
                 dish_id: _dish_id,
                 ingredient_id: _ingredient_id,
@@ -69,7 +69,7 @@ $(document).ready(function() {
     // Parse dish ID.
     _dish_id = findGetParameter("id");
 
-    $.get(`../../api/getDishIngredients.php?id=${_dish_id}`, function data(){})
+    $.get(`../../api/dish/getDishIngredients.php?id=${_dish_id}`, function data(){})
             .done(function(ingredients) 
             {
                 // Populate a new box with ingredient info.
@@ -95,7 +95,7 @@ $(document).ready(function() {
                     editableColumns: "2",
                     onEdit: function($row)
                     {
-                        $.post("../../../api/updateDishIngredient.php", 
+                        $.post("../../../api/dish/updateDishIngredient.php", 
                             { 
                                 dish_id: _dish_id,
                                 ingredient_id: $row.children("#ingredient_id").text(),
@@ -104,7 +104,7 @@ $(document).ready(function() {
                     },
                     onBeforeDelete: function($row) 
                     {
-                        $.post("../../../api/removeDishIngredient.php", 
+                        $.post("../../../api/dish/removeDishIngredient.php", 
                             { 
                                 dish_id: _dish_id,
                                 ingredient_id: $row.children("#ingredient_id").text()

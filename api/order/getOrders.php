@@ -1,7 +1,7 @@
 <?php
     include("../util/integer.php");
     include("../util/string.php");
-    include("config/db.php");
+    include("../config/db.php");
 
     // Prepare orders statement.
     $orders_stmt = $db->prepare(

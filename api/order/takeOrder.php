@@ -1,5 +1,5 @@
 <?php
-    include("../api/config/db.php");
+    include("../config/db.php");
     include("../util/integer.php");
     include("../util/double.php");
     include("../util/string.php");

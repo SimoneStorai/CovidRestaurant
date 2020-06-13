@@ -10,9 +10,8 @@ function findGetParameter(parameterName) {
 }
 
 $(document).ready(function() {
-    $.get(`../../api/getOrder.php?id=${findGetParameter("id")}`, function data() { })
+    $.get(`../../api/order/getOrder.php?id=${findGetParameter("id")}`, function data() { })
             .done(function(order) {
-                alert(JSON.stringify(order));
                 // Populate a new box with order info.
                 // Append it to the slider.
                 $('#table').append(`

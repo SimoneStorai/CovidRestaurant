@@ -1,7 +1,7 @@
 <?php
     include("../util/integer.php");
     include("../util/string.php");
-    include("config/db.php");
+    include("../config/db.php");
 
     // Prepare dishes select statement.
     if (assert_string_array($_GET, "category", false))
@@ -15,6 +15,7 @@
                 MIN(FLOOR(i.quantity / di.quantity)) AS units FROM dish_ingredient di
                 JOIN dish d ON di.dish_id = d.id
                 JOIN ingredient i ON di.ingredient_id = i.id
+                WHERE d.category = ?
                 GROUP BY d.id;"
             );
         }
@@ -25,9 +26,11 @@
                 COALESCE(MIN(FLOOR(i.quantity / di.quantity)), 0) AS units FROM dish d
                 LEFT JOIN dish_ingredient di ON di.dish_id = d.id
                 LEFT JOIN ingredient i ON di.ingredient_id = i.id
+                WHERE d.category = ?
                 GROUP BY d.id;"
             );
         }
+        $dishes_stmt->bind_param("s", $category);
     }
     else
     {

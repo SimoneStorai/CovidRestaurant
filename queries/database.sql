@@ -7,7 +7,8 @@ CREATE TABLE `user` (
     `password` CHAR(32) NOT NULL,
     `name` VARCHAR(32) NOT NULL,
     `admin` BOOL NOT NULL,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`),
+    UNIQUE KEY (`mail`)
 );
 
 CREATE TABLE `user_log` (

@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $.get("../../api/getDishes.php", function data() { })
+    $.get("../../api/dish/getDishes.php", function data() { })
             .done(function(dishes) {
                 for (i = 0; i < dishes.length; i++)
                 {
@@ -28,7 +28,7 @@ $(document).ready(function() {
                     $addButton: $('#new-dish-button'),
                     onAdd: function($row)
                     {
-                        $.post("../../api/addDish.php",
+                        $.post("../../api/dish/addDish.php",
                             {
                                 name: "Nome",
                                 price: 0.00,
@@ -43,7 +43,7 @@ $(document).ready(function() {
                     },
                     onEdit: function($row)
                     {
-                        $.post("../../api/updateDish.php", 
+                        $.post("../../api/dish/updateDish.php", 
                             { 
                                 id: $row.children("#id").text(),
                                 name: $row.children("#name").text(),
@@ -56,7 +56,7 @@ $(document).ready(function() {
                     },
                     onBeforeDelete: function($row) 
                     {
-                        $.post("../../api/removeDish.php", 
+                        $.post("../../api/dish/removeDish.php", 
                             { 
                                 dish_id: $row.children("#id").text() 
                             })
