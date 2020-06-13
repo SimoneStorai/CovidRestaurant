@@ -1,7 +1,7 @@
 <?php
     include("../util/integer.php");
     include("../util/string.php");
-    include("config/db.php");
+    include("../config/db.php");
 
     if (isset($_SESSION["session_id"]))
     {
@@ -31,19 +31,25 @@
     $login_stmt->bind_param("s", $mail);
 
     // Execute select query and fetch its data using PDO's utility.
-    $login_stmt->execute()
-    $user = $login_stmt->fetch(PDO::FETCH_ASSOC);
+    $login_stmt->execute();
+    $result = $login_stmt->get_result();
+    if ($row = $result->fetch_assoc())
+    {
+        $_mail = $row["mail"];
+        $_password = $row["password"];
 
-    if (!$user || password_verify($password, $user["password"]))
-    {
-        // Bad login.
-        echo("Invalid user credentials.");
+        if (password_verify($password, $_password))
+        {
+            // Init session.
+            session_regenerate_id();
+            $_SESSION["session_id"] = session_id();
+            $_SESSION['session_user'] = $_mail;
+
+            echo("Whats up");
+            return;
+        }
     }
-    else
-    {
-        // Init session.
-        session_regenerate_id();
-        $_SESSION["session_id"] = session_id();
-        $_SESSION['session_user'] = $user["mail"];
-    }
+
+    // Bad login.
+    echo("Invalid user credentials.");
 ?>

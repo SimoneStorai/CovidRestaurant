@@ -6,18 +6,8 @@ CREATE TABLE `user` (
 	`mail` VARCHAR(32) NOT NULL,
     `password` CHAR(32) NOT NULL,
     `name` VARCHAR(32) NOT NULL,
-    `admin` BOOL NOT NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY (`mail`)
-);
-
-CREATE TABLE `user_log` (
-	`id` INT NOT NULL AUTO_INCREMENT,
-    `user_id` INT NOT NULL,
-    `date` DATE NOT NULL,
-    `action` VARCHAR(256) NOT NULL,
-	PRIMARY KEY (`id`),
-    FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 );
 
 CREATE TABLE `ingredient` (
@@ -46,13 +36,6 @@ CREATE TABLE `dish_ingredient` (
     PRIMARY KEY (`dish_id`, `ingredient_id`),
 	FOREIGN KEY (`dish_id`) REFERENCES `dish` (`id`) ON DELETE CASCADE,
     FOREIGN KEY (`ingredient_id`) REFERENCES `ingredient`(`id`) ON DELETE CASCADE
-);
-
-CREATE TABLE `customer` (
-	`id` INT NOT NULL AUTO_INCREMENT,
-    `table_id` INT NOT NULL,
-    `date` DATE NOT NULL,
-    PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `order` (

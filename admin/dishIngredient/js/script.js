@@ -46,13 +46,12 @@ confirmButton.onclick = function()
 {
     if (_ingredient_id > 0)
     {
-        alert(document.getElementById("ingredient-quantity").innerText);
         // Add new dish ingredient.
         $.post("../../../api/dish/addDishIngredient.php",
             {
                 dish_id: _dish_id,
                 ingredient_id: _ingredient_id,
-                quantity: document.getElementById("ingredient-quantity").value
+                quantity: document.getElementById("add-ingredient-quantity").value
             });
     }
 }
