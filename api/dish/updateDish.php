@@ -53,7 +53,7 @@
     }
     $waiting_time = $_POST["waiting_time"];
 
-    // Parse new waiting time.
+    // Parse new category.
     if (!assert_string_array($_POST, "category", false))
     {
         echo("Invalid category provided.");

@@ -83,4 +83,6 @@
         $order_dish_stmt->execute();
         $ingredient_consumption_stmt->execute();
     }
+
+    echo("Ordine eseguito.");
 ?>

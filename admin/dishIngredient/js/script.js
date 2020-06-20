@@ -99,7 +99,7 @@ $(document).ready(function() {
                                 dish_id: _dish_id,
                                 ingredient_id: $row.children("#ingredient_id").text(),
                                 quantity: $row.children("#required_quantity").text()
-                            });
+                            }).done(function(data) { if (data) alert(data); });
                     },
                     onBeforeDelete: function($row) 
                     {
@@ -107,7 +107,8 @@ $(document).ready(function() {
                             { 
                                 dish_id: _dish_id,
                                 ingredient_id: $row.children("#ingredient_id").text()
-                            });
+                            }).done(function(data) { if (data) alert(data); });
+                        return true;
                     }
                 });
                 example1.init();

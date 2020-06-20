@@ -33,4 +33,6 @@
 
     // Execute ingredient insert statement.
     $dish_ingredient_stmt->execute();
+
+    echo("Ingredient added.");
 ?>

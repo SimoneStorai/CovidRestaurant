@@ -1,3 +1,5 @@
+var TABLE_ID = 0;
+
 function getMenu(cat) {
   $.get("../api/dish/getDishes.php", { category: cat, ignoreEmpty: true })
     .done(function(data) {
@@ -38,28 +40,26 @@ function randomString(length) {
     return text;
 }
 
-function showOrders()
-{
+function showOrders(){
   var result = "";
   var total = "";
   var orders = JSON.parse(localStorage.orders);
-  for(var f=0;f<orders.length;f++) 
-  {
-    result += `<div class="itembox" id="${orders[f][0]}"><div class="alignleft"><span class="plus" onclick="popUp(${orders[f][0]}, ${orders[f][1]},${orders[f][2]}, ${f})">+</span>&nbsp&nbsp'${orders[f][1].toLowerCase()}
-    ' ('${orders[f][3]}')</div><div class="alignright">'${orders[f][2]}
-    '&nbsp<span class="minus" onclick="removeOrder('${f}','
-    ${orders[f][2]}'
-    +'\')">-</span></div><div style="clear: both;"></div></div>`;
-      if(orders[f][4].length > 0) {
-        for(var g=0;g<orders[f][4].length;g++) {
-          result += '<div class="itembox" id="'+orders[f][4][g][0]+'"><div class="alignleft">--'+orders[f][4][g][1].toLowerCase()
-          +' ('+orders[f][4][g][3]+')</div><div class="alignright">'+orders[f][4][g][2]
-          +'.00 &nbsp<span class="minus" onclick="removeAddOn(\''+f+'\',\''
-          +g+'\',\''
-          +orders[f][4][g][2] + '\')">-</span></div><div style="clear: both;"></div></div>';
-        }
+  for(var f=0;f<orders.length;f++) {
+  result += '<div class="itembox" id="'+orders[f][0]+'"><div class="alignleft"><span class="plus" onclick="popUp(\''+orders[f][0]+'\',\''+orders[f][1]+'\',\''+orders[f][2]+'\',\''+f+'\')">+</span>&nbsp&nbsp'+orders[f][1].toLowerCase()
+  +' ('+orders[f][3]+')</div><div class="alignright">'+orders[f][2]
+  +'.00 &nbsp<span class="minus" onclick="removeOrder(\''+f+'\',\''
+  +orders[f][2]
+  +'\')">-</span></div><div style="clear: both;"></div></div>';
+    if(orders[f][4].length > 0) {
+      for(var g=0;g<orders[f][4].length;g++) {
+        result += '<div class="itembox" id="'+orders[f][4][g][0]+'"><div class="alignleft">--'+orders[f][4][g][1].toLowerCase()
+        +' ('+orders[f][4][g][3]+')</div><div class="alignright">'+orders[f][4][g][2]
+        +'.00 &nbsp<span class="minus" onclick="removeAddOn(\''+f+'\',\''
+        +g+'\',\''
+        +orders[f][4][g][2] + '\')">-</span></div><div style="clear: both;"></div></div>';
       }
-  }
+    }
+    }
   result += '<div class="focus" tabindex="1"></div>';
   total = "Totale: " + localStorage.total + ".00";
   $('#bill').html(result);
@@ -209,9 +209,9 @@ function takeOrder()
 
   $.post("../api/order/takeOrder.php", 
     { 
-      table_id: 0, 
+      table_id: TABLE_ID, 
       orders: _orders
-    });
+    }).done(function(data) { if (data) alert(data); });
 }
 
 

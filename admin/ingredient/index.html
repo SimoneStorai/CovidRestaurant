@@ -7,7 +7,7 @@
             content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
 
-        <title>BSTable - Editable Bootstrap Table Examples</title>
+        <title>CovidRestaurant | Ingredienti</title>
         <link href="../../vendor/jquery/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
         <link href="../../vendor/gui/css/modal.css" rel="stylesheet" type="text/css">
         <link href="../../vendor/gui/css/dropdown.css" rel="stylesheet" type="text/css">
@@ -19,7 +19,6 @@
     </head>
 
     <body>
-    </div>
         <main role="main" class="container" style="margin-top: 150px;">
             <div style="margin-top: 20px;">
                 <h1>INGREDIENTI</h1>
@@ -37,6 +36,19 @@
                 </button>			
             </div>
         </main>
+
+        <div id="add-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="dropdown">
+                    <label for="name">Nome:</label><br>
+                    <input type="text" id="add-name" required><br>
+                    <label for="quantity">Quantità:</label><br>
+                    <input type="number" min="1" id="add-quantity" required><br>
+                    <button id="confirm-button">Aggiungi</button>
+                </div>
+            </div>
+        </div>
 
         <script src="../../vendor/bstable/js/bstable.js"></script>
         <script src="js/script.js"></script>

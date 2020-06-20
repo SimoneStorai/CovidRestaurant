@@ -22,26 +22,27 @@ class BSTable {
   constructor(tableId, options) {
 
     var defaults = {
-      editableColumns: null,          // Index to editable columns. If null all td will be editable. Ex.: "1,2,3,4,5"
-      $addButton: null,               // Jquery object of "Add" button
-      onEdit: function() {},          // Called after edition
-      onBeforeDelete: function() {},  // Called before deletion
-      onDelete: function() {},        // Called after deletion
-      onAdd: function() {},           // Called when added a new row
-      advanced: {                     // Do not override advanced unless you know what youre doing
-          columnLabel: 'Actions',
+      editableColumns: null,      // Index to editable columns. If null all td will be editable. Ex.: "1,2,3,4,5"
+      $addButton: null,           // Jquery object of "Add" button
+      onEdit: function() {},      // Called after edition
+      onBeforeDelete: function() 
+        { return false},          // Called before deletion
+      onDelete: function() {},    // Called after deletion
+      onAdd: function() {},       // Called when added a new row
+      advanced: {                 // Do not override advanced unless you know what youre doing
+          columnLabel: 'Azioni',
           buttonHTML: `<div class="btn-group pull-right">
                 <button id="bEdit" type="button" class="btn btn-sm btn-default">
-                    <span class="fa fa-edit" > </span>
+                    <span class="fa fa-edit"> </span>
                 </button>
                 <button id="bDel" type="button" class="btn btn-sm btn-default">
-                    <span class="fa fa-trash" > </span>
+                    <span class="fa fa-trash"> </span>
                 </button>
                 <button id="bAcep" type="button" class="btn btn-sm btn-default" style="display:none;">
-                    <span class="fa fa-check-circle" > </span>
+                    <span class="fa fa-check-circle"> </span>
                 </button>
                 <button id="bCanc" type="button" class="btn btn-sm btn-default" style="display:none;">
-                    <span class="fa fa-times-circle" > </span>
+                    <span class="fa fa-times-circle"></span>
                 </button>
             </div>`
       }
@@ -167,9 +168,11 @@ class BSTable {
   _rowDelete(button) {                        
   // Remove the row
     var $row = $(button).parents('tr');       // access the row
-    this.options.onBeforeDelete($row);
-    $row.remove();
-    this.options.onDelete();
+    if (this.options.onBeforeDelete($row))
+    {
+      $row.remove();
+      this.options.onDelete();
+    }
   }
   _rowAccept(button) {
   // Accept the changes to the row

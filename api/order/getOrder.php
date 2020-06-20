@@ -18,13 +18,13 @@
     $order_stmt->bind_param("i", $id);
 
     // Execute query and parse its result.
+    $orders = array();
     $order_stmt->execute();
     $result = $order_stmt->get_result();
-    if ($row = $result->fetch_assoc())
-    {
-        // Echo as JSON array.
-        header("Content-Type: application/json");
-        echo(json_encode($row));
-    }
-    else echo("Order not found.");
+    while ($row = $result->fetch_assoc())
+        array_push($orders, $row);
+
+    // Echo as JSON array.
+    header("Content-Type: application/json");
+    echo(json_encode($orders));
 ?>

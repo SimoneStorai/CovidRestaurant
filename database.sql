@@ -50,6 +50,27 @@ CREATE TABLE `order_dish` (
     `dish_id` INT NOT NULL,
     `quantity` INT NOT NULL,
     PRIMARY KEY (`order_id`, `dish_id`),
-    FOREIGN KEY (`order_id`) REFERENCES `order` (`id`),
-    FOREIGN KEY (`dish_id`) REFERENCES `dish` (`id`)
+    FOREIGN KEY (`order_id`) REFERENCES `order` (`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`dish_id`) REFERENCES `dish` (`id`) ON DELETE CASCADE
 );
+
+INSERT INTO user (mail, password, name) VALUES ("admin@admin.com", "admin", "Admin");
+
+INSERT INTO dish (name, price, waiting_time, category, description, image_url) VALUES (
+    "Spaghetti", 20.0, "10:00", "Primi", "Spaghetti", "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Tarako_spaghetti.jpg/800px-Tarako_spaghetti.jpg");
+INSERT INTO dish (name, price, waiting_time, category, description, image_url) VALUES (
+    "Antipasto di Pesce", 15.0, "02:30", "Antipasti", "Antipasto alla frittura di pesce.", "https://blog.giallozafferano.it/asilannablu/wp-content/uploads/2019/12/4-antipasti-freddi-pronti-in-soli-10-minuti-948x750.jpg");
+
+INSERT INTO ingredient (name, quantity) VALUES (
+    "Pasta", 5000);
+INSERT INTO ingredient (name, quantity) VALUES (
+    "Pesce", 2500);
+INSERT INTO ingredient (name, quantity) VALUES (
+    "Vongole", 500);
+
+INSERT INTO dish_ingredient (dish_id, ingredient_id. quantity) VALUES (
+    1, 2, 500);
+INSERT INTO dish_ingredient (dish_id, ingredient_id. quantity) VALUES (
+    2, 3, 250);
+INSERT INTO dish_ingredient (dish_id, ingredient_id. quantity) VALUES (
+    2, 2, 100);

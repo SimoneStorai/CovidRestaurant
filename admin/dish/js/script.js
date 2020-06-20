@@ -1,3 +1,41 @@
+// Get modal DOM reference and configure it.
+var modal = document.getElementById("add-modal");
+
+// Get open button DOM reference and configure it.
+var openButton = document.getElementById("new-dish-button");
+openButton.onclick = function() { modal.style.display = "block"; }
+
+// Configure close button.
+var closeButton = document.getElementsByClassName("close")[0];
+closeButton.onclick = function() { modal.style.display = "none"; }
+
+// Configure confirm button.
+confirmButton = document.getElementById("confirm-button");
+confirmButton.onclick = function()
+{
+    $.post("../../api/dish/addDish.php",
+    {
+        name: document.getElementById("add-name").value,
+        price: document.getElementById("add-price").value,
+        waiting_time: document.getElementById("add-waiting-time").value,
+        category: document.getElementById("add-category").value,
+        description: document.getElementById("add-description").value,
+        image_url: document.getElementById("add-image-url").value
+    })
+    .done(function(data)
+    {
+        alert(JSON.stringify(data));
+    })
+}
+
+// Configure window.
+window.onclick = function(event) 
+{
+    // Close modal.
+    if (event.target == modal)
+        modal.style.display = "none";
+}
+
 $(document).ready(function() {
     $.get("../../api/dish/getDishes.php", function data() { })
             .done(function(dishes) {
@@ -24,23 +62,7 @@ $(document).ready(function() {
 
                 // Load the table.
                 var example1 = new BSTable("table", {
-                    editableColumns: "0, 1, 2, 3, 4",
-                    $addButton: $('#new-dish-button'),
-                    onAdd: function($row)
-                    {
-                        $.post("../../api/dish/addDish.php",
-                            {
-                                name: "Nome",
-                                price: 0.00,
-                                waiting_time: "00:00:00",
-                                waiting_time: "Nessuna",
-                                description: "Descrizione",
-                                image_url: "Immagine"
-                            })
-                            .done(function(data) {
-                                $row.children("#id").text($data["id"]);
-                            });
-                    },
+                    editableColumns: "0, 1, 2, 3, 4, 5",
                     onEdit: function($row)
                     {
                         $.post("../../api/dish/updateDish.php", 
@@ -52,17 +74,15 @@ $(document).ready(function() {
                                 category: $row.children("#category").text(),
                                 description: $row.children("#description").text(),
                                 image_url: $row.children("#image_url").text()
-                            });
+                            }).done(function(data) { if (data) alert(data); });
                     },
                     onBeforeDelete: function($row) 
                     {
                         $.post("../../api/dish/removeDish.php", 
                             { 
                                 dish_id: $row.children("#id").text() 
-                            })
-                            .done(function(data) {
-                                alert(JSON.stringify(data));
-                            });
+                            }).done(function(data) { if (data) alert(data); });
+                        return true;
                     }
                 });
                 example1.init();

@@ -18,6 +18,7 @@
         return;
     }
     $password = $_POST["password"];
+    $password = password_hash($password, PASSWORD_DEFAULT);
 
     // Parse display name.
     if (!assert_string_array($_POST, "name", false))
@@ -31,4 +32,7 @@
     $user_stmt = $db->prepare("INSERT INTO user (mail, password, name) VALUES(?, ?, ?)");
     $user_stmt->bind_param("sss", $mail, $password, $name);
     $user_stmt->execute();
+
+    // Report success status.
+    echo("Utente aggiunto con successo.");
 ?>

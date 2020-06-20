@@ -1,24 +1,8 @@
 <?php
-    include("../config/db.php");
-    include("../util/integer.php");
-    include("../util/string.php");
-
-    /*
-    // Decode authorization credentials.
-    if (!assert_string_array($_POST, "mail", false))
-    {
-        echo("Invalid mail.");
-        return;
-    }
-    $mail = $_POST["mail"];
-
-    if (!assert_string_array($_POST, "password", false))
-    {
-        echo("Invalid password");
-        return;
-    }
-    $password = $_POST["password"];
-    */
+        include("../config/db.php");
+        include("../util/integer.php");
+        include("../util/double.php");
+        include("../util/string.php");
 
     // Get dish ID.
     if (!assert_int_array($_POST, "dish_id"))

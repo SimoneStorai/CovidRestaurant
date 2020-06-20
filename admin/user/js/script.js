@@ -32,7 +32,7 @@ window.onclick = function(event)
     // Close modal.
     if (event.target == modal)
         modal.style.display = "none";
-}
+};
 
 $(document).ready(function() {
     $.get("../../api/user/getUsers.php", function data() { })
@@ -60,15 +60,17 @@ $(document).ready(function() {
                         $.post("../../../api/user/updateUser.php", 
                             { 
                                 id: $row.children("#id").text(),
+                                mail: $row.children("#mail").text(),
                                 name: $row.children("#name").text()
-                            });
+                            }).done(function(data) { if (data) alert(data); });
                     },
                     onBeforeDelete: function($row) 
                     {
                         $.post("../../../api/user/removeUser.php", 
                             { 
                                 id: $row.children("#id").text()
-                            });
+                            }).done(function(data) { if (data) alert(data); });
+                        return true;
                     }
                 });
                 example1.init();
